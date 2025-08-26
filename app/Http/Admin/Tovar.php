@@ -79,7 +79,7 @@ class Tovar extends Section implements Initializable
     {
         return AdminForm::panel()->addBody([
             AdminFormElement::text('name', 'Name')->required(),
-                AdminFormElement::text('category', 'Category'),
+                AdminFormElement::select('category', 'Категория')->setModelForOptions('\App\Category')->setDisplay('name'),
                 AdminFormElement::text('slug', 'Slug'),
                 AdminFormElement::number('price', 'Price'),
                 AdminFormElement::image('image', 'Image')->mutateValue(function ($value){
