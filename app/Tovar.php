@@ -13,6 +13,6 @@ class Tovar extends Model
         # One and Many
         return $this->hasMany(Category::class);
     }
-
+    еуые
     protected $fillable=['name', 'category', 'slug', 'price', 'image', 'description'];
 }
