@@ -11,7 +11,7 @@ class Category extends Model
     public function tovar(): HasMany
     {
         # One and Many
-        return $this->HasMany(Tovar::class);
+        return $this->hasMany(Tovar::class);
     }
 
     protected $fillable = ['name', 'slug'];
