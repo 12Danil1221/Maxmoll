@@ -19,7 +19,7 @@ XL-12412',
             'slug'=>'TestTovarSlug', 
             'price'=>1337, 
             'image'=>'TestTovarImage' ,
-            'description'=>'TestTovarDescription'
+            'description'=>'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae aut et aliquam laboriosam esse saepe reprehenderit, illum, rem ipsum minus possimus illo laudantium debitis neque fugiat labore. Impedit, totam cum!'
         ]);
 
     }
