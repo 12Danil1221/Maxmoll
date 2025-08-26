@@ -67,6 +67,10 @@
         margin-bottom: 30px;
     }
 
+    .hidden {
+        display: none;
+    }
+
     .h2 {
         margin-bottom: 0;
     }
@@ -111,11 +115,11 @@
         <section class="mx-auto">
             <div class="content d-flex w-100" style="justify-content:space-between; height: 50px;">
                 <div class="col-sm-8 d-flex align-items-center pl-0 pr-0">
-                    <a href="welcome">
-                        <div class="content-logo bg-primary pl-3 pr-3">
+                    <div class="content-logo bg-primary pl-3 pr-3">
+                        <a href="../welcome">
                             <p class="h3 text-white">%ЛОГО%</p>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                     <div class="content-address d-flex align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                             class="bi bi-geo-alt" viewBox="0 0 16 16">
@@ -151,40 +155,66 @@
         </section>
         <section class=" mx-auto">
             <div class="content-links d-flex p-3 text-dark" style="gap:1rem;">
-                <a href="welcome">
+                <a href="../welcome">
                     <p class="h4 link-one font-weight-bold">Главная</p>
                 </a>
-                <div class="block-catalog d-flex align-items-center">
-                    <p class="h4 link-two font-weight-bold">Каталог</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#5B9BD5"
-                        class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                    </svg>
+                <div class="block-catalogs-all d-grid">
+                    <div class="block-catalog d-flex align-items-center">
+                        <p class="h4 link-two font-weight-bold">Каталог</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#5B9BD5"
+                            class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </div>
+                    <div class="block-catalog-list hidden d-grid border border-1 border-dark">
+                        @foreach ($categories as $category)
+
+                        <section name="categories">
+                            <a href="{{ route('display_category_tovars',$category->id) }}">
+                                <option class="text-dark font-weight-bold" value="{{ $category->name }}">
+                                    {{ $category->name }}</option>
+                            </a>
+                        </section>
+
+                        @endforeach
+                    </div>
                 </div>
                 <p class="h4 link-three font-weight-bold">О нас</p>
             </div>
         </section>
     </header>
     <main>
-
-    </main>
-    <div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">Login</a>
-
-            @if (Route::has('register'))
-            <a href="{{ route('register') }}">Register</a>
-            @endif
-            @endauth
+        @if($message = Session::get('success'))
+        <div class="container message-success bg-success rounded">
+            <p class="text-white">{{ $message }}</p>
         </div>
         @endif
-    </div>
 
+        <div class="card-content container d-flex justify-content-between">
+            @foreach ($cards as $card)
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{$card->name}}</h5>
+                    <div class="d-flex ">
+                        <p class="card-text">{{$card->description}}</p>
+                        <p class="card-text pl-3">{{$card->price}}Р</p>
+                    </div>
+                </div>
+                <form action="{{ route('destroy_card', $card->id) }}" method="post">
+                    @csrf
+                    @method ('DELETE')
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="button-delete-card btn btn-danger text-white h-35" btn-lg
+                            btn-block">Убрать из
+                            корзины</button>
+                    </div>
+                </form>
+            </div>
+            @endforeach
+        </div>
+
+    </main>
 
 
     <!-- Bootstrap JS -->
@@ -199,6 +229,23 @@
     </script>
 
     <script>
+    const block_catalog = document.querySelector('div.block-catalog');
+    const block_catalog_list = document.querySelector('div.block-catalog-list');
+
+    block_catalog.addEventListener('', () => {
+        block_catalog_list.classList.toggle('hidden');
+    })
+
+    block_catalog.addEventListener('click', () => {
+        block_catalog_list.classList.toggle('hidden');
+    })
+
+
+    const button_add_card = document.querySelector('button.button-add-card');
+
+    document.addEventListener('click', () => {
+        button_add_card.classList.remove('hidden');
+    })
     </script>
 </body>
 
