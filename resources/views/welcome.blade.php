@@ -163,12 +163,14 @@
                                 d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                         </svg>
                     </div>
-                    <div class="block-catalog-list d-grid border border-1 border-dark">
+                    <div class="block-catalog-list hidden d-grid border border-1 border-dark">
                         @foreach ($categories as $category)
 
                         <section name="categories">
-                            <option class="text-dark font-weight-bold" value="{{ $category->name }}">
-                                {{ $category->name }}</option>
+                            <a href="{{ route('display_category_tovars',$category->id) }}">
+                                <option class="text-dark font-weight-bold" value="{{ $category->name }}">
+                                    {{ $category->name }}</option>
+                            </a>
                         </section>
 
                         @endforeach
@@ -179,8 +181,12 @@
         </section>
     </header>
     <main>
-
-        <div class="container mx-auto d-flex justify-content-between flex-wrap" style="gap:2rem;">
+        @if($message = Session::get('danger'))
+        <div class="container message-danger bg-danger rounded">
+            <p class="text-white">{{ $message }}</p>
+        </div>
+        @endif
+        <div class="container mx-auto d-flex justify-content-start flex-wrap" style="gap:2rem;">
 
             @foreach ($tovars as $tovar)
             <div class="card pt-2 p-3 border border-dark">
@@ -193,11 +199,15 @@
                     <input type="hidden" name="image" value="{{ $tovar->image }}">
                     <input type="hidden" name="description" value="{{ $tovar->description }}">
 
-                    <div class="card-head">
-                        <img src="{{ $tovar->image }}" alt="{{$tovar->image}}">
-                    </div>
+                    <a href="{{ route('display_detail_tovar', $tovar->id) }}">
+                        <div class="card-head">
+                            <img src="{{ $tovar->image }}" alt="{{$tovar->image}}">
+                        </div>
+                    </a>
                     <div class="card-body d-grid text-center ">
-                        <p class="card-title h4 text-black font-weight-bold">{{$tovar->name}}</p>
+                        <a href="{{ route('display_detail_tovar', $tovar->id) }}">
+                            <p class="card-title h4 text-black font-weight-bold">{{$tovar->name}}</p>
+                        </a>
                         <div class="block-card d-flex justify-content-between" style="gap:1rem">
                             <p class="card-text">{{$tovar->price}}Р</p>
                             <button type="submit" class="button-add-card btn btn-success text-white" btn-lg btn-block">В
@@ -212,21 +222,6 @@
             {{ $tovars->links() }}
         </div>
     </main>
-    <!-- <div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">Login</a>
-
-            @if (Route::has('register'))
-            <a href="{{ route('register') }}">Register</a>
-            @endif
-            @endauth
-        </div>
-        @endif
-    </div> -->
 
 
 
