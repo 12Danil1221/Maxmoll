@@ -209,8 +209,9 @@
                             <p class="card-title h4 text-black font-weight-bold">{{$tovar->name}}</p>
                         </a>
                         <div class="block-card d-flex justify-content-between" style="gap:1rem">
-                            <p class="card-text">{{$tovar->price}}Р</p>
-                            <button type="submit" class="button-add-card btn btn-success text-white" btn-lg btn-block">В
+                            <p class="card-text font-weight-bold">{{$tovar->price}}Р</p>
+                            <button type="submit" class="button-add-card btn btn-success text-white border border-dark"
+                                style="height: 25px; margin:0px; padding: 0 10px;" btn-lg btn-block">В
                                 корзину</button>
                         </div>
                     </div>
